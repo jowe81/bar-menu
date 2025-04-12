@@ -5,6 +5,7 @@ const constants = {
     clientId: "barmenu",
     menuCollectionName: "barmenu",
     configCollectionName: "barmenu_config",
+    defaultColor: '#FAFAFA',
 };
 
 export default constants;

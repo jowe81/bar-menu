@@ -105,6 +105,7 @@ function Menu() {
         fontSize: config.top_header_font_size + "px",
         fontWeight: "bold",
         textShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.4)",
+        color: config.font_color ?? constants.defaultColor,
     };
 
     return (
@@ -118,6 +119,7 @@ function Menu() {
                     // Default
                     itemGroup.font_size = 40;
                 }
+
                 const itemGroupStyle = {
                     position: "absolute",
                     left: itemGroup.x + "px",
@@ -129,12 +131,14 @@ function Menu() {
                     padding: 25,
                     textShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.4)",
                     textAlign: 'center',
+                    color: itemGroup.font_color ?? config.font_color ?? constants.defaultColor,
                 };
 
                 const groupNameStyle = {
-                    fontSize: itemGroup.font_size + 5 + "px",
+                    fontSize: (itemGroup.header_font_size ?? itemGroup.font_size) + 5 + "px",
                     fontWeight: "bold",
                     textDecoration: "underline",
+                    color: itemGroup.header_font_color ?? config.font_color ?? constants.defaultColor,
                 };
 
                 // Toggle availability on single click.
