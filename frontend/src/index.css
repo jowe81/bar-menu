@@ -33,6 +33,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   cursor: none;
+  user-select: none;
 }
 
 h1 {
