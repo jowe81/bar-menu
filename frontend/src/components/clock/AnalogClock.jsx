@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function AnalogClock({ diameter }) {
     if (!diameter) {
-        diameter = 500;
+        diameter = 650;
     }
     const [time, setTime] = useState(new Date());
 
@@ -10,6 +10,41 @@ function AnalogClock({ diameter }) {
         const interval = setInterval(() => setTime(new Date()), 1000);
         return () => clearInterval(interval);
     }, []);
+
+    const renderNumbers = () => {
+        return Array.from({ length: 12 }, (_, i) => {
+            const num = i + 1;
+            // Reverse direction: go counter-clockwise
+            const angle = -((num % 12) * 30); // -30, -60, ... -330
+            const rad = (angle * Math.PI) / 180;
+            const distance = radius - 40; // padding from edge
+
+            const x = center + Math.sin(rad) * distance;
+            const y = center - Math.cos(rad) * distance;
+
+            return (
+                <div
+                    key={num}
+                    style={{
+                        position: "absolute",
+                        left: x - 25,
+                        top: y - 13,
+                        width: 40,
+                        height: 20,
+                        textAlign: "center",
+                        lineHeight: "20px",
+                        fontSize: "38px",
+                        textShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.4)",
+                        fontWeight: "bold",
+                        userSelect: "none",
+                        color: handsColorSec,
+                    }}
+                >
+                    {num}
+                </div>
+            );
+        });
+    };
 
     const radius = diameter / 2;
     const center = radius;
@@ -37,7 +72,8 @@ function AnalogClock({ diameter }) {
             transform: `rotate(${angle}deg)`,
             transformOrigin: "center bottom",
             borderRadius: "2px",
-        }
+            boxShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.4)",
+        };
     };
 
     return (
@@ -52,15 +88,16 @@ function AnalogClock({ diameter }) {
                 border: "4px solid " + clockColor,
                 backgroundColor: clockColor,
                 margin: "0 auto",
+                boxShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.2)",
             }}
         >
+            {renderNumbers()}
             {/* Hour Hand */}
             <div style={handStyle(radius * 0.5, 6, handsColorMS, hourAngle)} />
             {/* Minute Hand */}
             <div style={handStyle(radius * 0.7, 4, handsColorMS, minuteAngle)} />
             {/* Second Hand */}
             <div style={handStyle(radius * 0.9, 2, handsColorSec, secondAngle)} />
-
             {/* Center Dot */}
             <div
                 style={{
