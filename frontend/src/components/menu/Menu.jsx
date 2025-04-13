@@ -228,8 +228,7 @@ function Menu() {
     return (
         <div className="menu-container" style={menuStyle}>
             <div className="open-close-btn" onClick={openClose}></div>
-            {config.open ? menuJSX : <div className="bar-closed">Bar Closed</div>}
-            <AnalogClock />
+            {config.open ? menuJSX : <><div className="bar-closed">Bar Closed</div><AnalogClock /></>}
         </div>
     );
 }
