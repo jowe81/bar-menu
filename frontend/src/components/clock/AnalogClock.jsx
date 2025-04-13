@@ -23,6 +23,7 @@ function AnalogClock({ diameter }) {
 
     const clockColor = 'rgba(255, 255, 255, 0.1';
     const handsColorMS = 'rgba(255, 255, 255, .9)';
+    const handsColorSec = "rgba(255, 255, 255, .6)";
     const handStyle = function (length, width, color, angle) {
         // Make it go backwards.
         angle = 360 - angle;
@@ -43,8 +44,8 @@ function AnalogClock({ diameter }) {
         <div
             style={{
                 position: "relative",
-                top: '100px',
-                left: '-350px',
+                top: "120px",
+                left: "-350px",
                 width: `${diameter}px`,
                 height: `${diameter}px`,
                 borderRadius: "50%",
@@ -58,7 +59,7 @@ function AnalogClock({ diameter }) {
             {/* Minute Hand */}
             <div style={handStyle(radius * 0.7, 4, handsColorMS, minuteAngle)} />
             {/* Second Hand */}
-            <div style={handStyle(radius * 0.9, 2, clockColor, secondAngle)} />
+            <div style={handStyle(radius * 0.9, 2, handsColorSec, secondAngle)} />
 
             {/* Center Dot */}
             <div
