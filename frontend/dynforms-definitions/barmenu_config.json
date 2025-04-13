@@ -1,0 +1,69 @@
+{
+    "collectionName": "barmenu_config",
+    "title": "Bar Menu Configuration",
+    "allowExport": false,
+    "fields": [
+        {
+            "key": "open",
+            "label": "Bar is open",
+            "type": "boolean",
+            "default": false,
+            "rank": 1
+        },
+        {
+            "key": "top_header",
+            "label": "Top Header",
+            "type": "text",
+            "default": "Menu",
+            "rank": 5
+        },
+        {
+            "key": "top_header_x",
+            "label": "Top Header Position (X)",
+            "type": "number",
+            "default": "800",
+            "rank": 10
+        },
+        {
+            "key": "top_header_y",
+            "label": "Top Header Position (Y)",
+            "type": "number",
+            "default": "30",
+            "rank": 15
+        },
+        {
+            "key": "top_header_width",
+            "label": "Top Header Container Width (pixels)",
+            "type": "number",
+            "default": "1920",
+            "rank": 20
+        },
+        {
+            "key": "top_header_font_size",
+            "label": "Top Header Font Size",
+            "type": "number",
+            "default": "70",
+            "rank": 25
+        },
+        {
+            "key": "background_color",
+            "label": "Background Color",
+            "type": "text",
+            "default": "#555585",
+            "rank": 30
+        },
+        {
+            "key": "background_image",
+            "label": "Background Image",
+            "type": "url",
+            "rank": 35
+        },
+        {
+            "key": "font_color",
+            "label": "Font Color",
+            "type": "text",
+            "default": "#FAFAFA",
+            "rank": 40
+        }
+    ]
+}

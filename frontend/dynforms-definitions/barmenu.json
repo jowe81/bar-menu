@@ -1,0 +1,107 @@
+{
+    "collectionName": "barmenu",
+    "title": "Bar Menu",
+    "allowExport": false,
+    "fields": [
+        {
+            "key": "group_name",
+            "label": "Item Group Name",
+            "type": "text",
+            "rank": 1
+        },
+        {
+            "key": "show_group",
+            "label": "Show group",
+            "type": "boolean",
+            "default": true,
+            "rank": 3
+        },
+        {
+            "key": "x",
+            "label": "Position (X, pixels)",
+            "type": "number",
+            "rank": 5
+        },
+        {
+            "key": "y",
+            "label": "Position (Y, pixels)",
+            "type": "number",
+            "rank": 7
+        },
+        {
+            "key": "width",
+            "label": "Width (pixels)",
+            "type": "number",
+            "rank": 9
+        },
+        {
+            "key": "height",
+            "label": "Height (pixels)",
+            "type": "number",
+            "rank": 11
+        },
+        {
+            "key": "header_font_size",
+            "label": "Header Font size (pixels)",
+            "type": "number",
+            "rank": 13
+        },
+        {
+            "key": "header_font_color",
+            "label": "Header Font Color",
+            "type": "text",
+            "rank": 14
+        },
+        {
+            "key": "font_size",
+            "label": "Font size (pixels)",
+            "type": "number",
+            "rank": 15
+        },
+        {
+            "key": "font_color",
+            "label": "Font Color",
+            "type": "text",
+            "rank": 16
+        },
+        {
+            "key": "items",
+            "label": "Items",
+            "type": "subfieldArray",
+            "rank": 20,
+            "fields": [
+                {
+                    "key": "name",
+                    "label": "Item Name",
+                    "type": "text",
+                    "required": true,
+                    "rank": 1
+                },
+                {
+                    "key": "available",
+                    "label": "Available",
+                    "type": "boolean",
+                    "required": false,
+                    "rank": 2,
+                    "default": true
+                },
+                {
+                    "key": "hidden",
+                    "label": "Hide Item",
+                    "type": "boolean",
+                    "required": false,
+                    "rank": 3,
+                    "default": false
+                }
+            ]
+        },
+        {
+            "key": "created_at",
+            "label": "Created at",
+            "type": "date",
+            "readOnly": true,
+            "rank": 30,
+            "display": true
+        }
+    ]
+}
