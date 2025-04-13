@@ -1,0 +1,18 @@
+.bar-closed {
+    color: gray;
+    text-align: center;
+    width: 100%;
+    font-size: 250px;
+    top: 700px;
+    position: absolute;
+    text-shadow: 0.05em 0.05em 0.1em rgba(0, 0, 0, 0.8);
+}
+
+.open-close-btn {
+    width: 80px;
+    height: 120px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9999;
+}

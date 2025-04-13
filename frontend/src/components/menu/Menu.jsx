@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from "react";
 import constants from '../../constants';
+import './menu.css';
 
 function Menu() {
     const [menu, setMenu] = useState([]);
@@ -8,15 +9,22 @@ function Menu() {
     const baseUrl = `${constants.apiRoot}/records/`;
     const pushEndpoint = `${constants.apiRoot}/${constants.apiPushEndpoint}`;
 
+    // Toggle the open flag.
+    function openClose(e) {
+        const record = { ...config }
+        record.open = !record.open;
+        updateDb(record, constants.configCollectionName).then(data => setConfig(record));
+    }
+
     // Use Dynforms M2M to update the record in the database.
-    function updateDb(record) {
-        fetch(pushEndpoint, {
+    async function updateDb(record, collectionName) {
+        return fetch(pushEndpoint, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                collectionName: constants.menuCollectionName,
+                collectionName,
                 record,
                 clientId: constants.clientId
             }),
@@ -108,8 +116,8 @@ function Menu() {
         color: config.font_color ?? constants.defaultColor,
     };
 
-    return (
-        <div className="menu-container" style={menuStyle}>
+    const menuJSX = (
+        <>
             <div className="menu-top-header" style={topHeaderStyle}>
                 {config.top_header}
             </div>
@@ -130,7 +138,7 @@ function Menu() {
                     border: itemGroup.border,
                     padding: 25,
                     textShadow: "0.05em 0.05em 0.1em rgba(0, 0, 0, 0.4)",
-                    textAlign: 'center',
+                    textAlign: "center",
                     color: itemGroup.font_color ?? config.font_color ?? constants.defaultColor,
                 };
 
@@ -143,41 +151,43 @@ function Menu() {
 
                 // Toggle availability on single click.
                 function itemClick(e) {
-                    const itemName = e.currentTarget.dataset.name;
-                    const recordId = e.currentTarget.dataset.record_id;
+                    const itemName = e.target.dataset.name;
+                    const recordId = e.target.dataset.record_id;
 
                     // The attribute stores the boolean as a string, "true" or "false".
-                    const availableString = e.currentTarget.dataset.available;
+                    const availableString = e.target.dataset.available;
                     const available = availableString !== "false";
                     const availableToggled = !available;
 
-                    // Update the UI.
-                    e.target.style.textDecoration = availableToggled ? "none" : "line-through";
-                    e.target.style.opacity = availableToggled ? "100%" : "60%";
-                    e.currentTarget.dataset.available = availableToggled ? "true" : "false";
-
                     // Update the database.
-                    const record = menu.find(record => record._id === recordId);
+                    const record = menu.find((record) => record._id === recordId);
                     setItemProperty(record, itemName, "available", !available);
-                    updateDb(record);
+                    updateDb(record, constants.menuCollectionName).then(data => {
+                        // Update the UI.
+                        e.target.style.textDecoration = availableToggled ? "none" : "line-through";
+                        e.target.style.opacity = availableToggled ? "100%" : "60%";
+                        e.target.dataset.available = availableToggled ? "true" : "false";
+                    });
                 }
 
                 // Hide the item on double click.
                 function itemDoubleClick(e) {
-                    const itemName = e.currentTarget.dataset.name;
-                    const recordId = e.currentTarget.dataset.record_id;
-
-                    // Update the UI (hide the item).
-                    e.currentTarget.style.display = "none";
+                    const itemName = e.target.dataset.name;
+                    const recordId = e.target.dataset.record_id;
 
                     // Update the database.
                     const record = menu.find((record) => record._id === recordId);
                     setItemProperty(record, itemName, "hidden", true);
-                    updateDb(record);
+                    updateDb(record, constants.menuCollectionName).then(data => {
+                        // Update the UI (hide the item).
+                        e.target.style.display = "none";
+                    });
                 }
 
-                // Render the menu.
-                const itemsToShow = itemGroup.items.filter((item) => !item.hide).sort((a, b) => a.name > b.name ? 1 : -1);
+                // Render the group.
+                const itemsToShow = itemGroup.items
+                    .filter((item) => !item.hide)
+                    .sort((a, b) => (a.name > b.name ? 1 : -1));
                 if (itemsToShow.length) {
                     // Have menu items to show.
                     return (
@@ -187,18 +197,37 @@ function Menu() {
                             {itemsToShow.map((item, index) => {
                                 const itemStyle = {};
                                 itemStyle.textDecoration = item.available ? "none" : "line-through";
-                                itemStyle.opacity = item.available ? "100%" : "60%",
-                                itemStyle.display = item.hidden ? "none" : "block";
+                                (itemStyle.opacity = item.available ? "100%" : "60%"),
+                                    (itemStyle.display = item.hidden ? "none" : "block");
 
-                                return <div key={index} data-name={item.name} data-record_id={itemGroup._id} data-available={item.available} style={itemStyle} onClick={itemClick} onDoubleClick={itemDoubleClick}>{item.name}</div>;
+                                return (
+                                    <div
+                                        key={index}
+                                        data-name={item.name}
+                                        data-record_id={itemGroup._id}
+                                        data-available={item.available}
+                                        style={itemStyle}
+                                        onClick={itemClick}
+                                        onDoubleClick={itemDoubleClick}
+                                    >
+                                        {item.name}
+                                    </div>
+                                );
                             })}
                         </div>
                     );
                 } else {
-                    // No item group has any unhidden content.
-                    return <></>;
+                    // Group is empty
+                    return <div></div>;
                 }
             })}
+        </>
+    );
+
+    return (
+        <div className="menu-container" style={menuStyle}>
+            <div className="open-close-btn" onClick={openClose}></div>
+            {config.open ? menuJSX : <div className="bar-closed">Bar Closed</div>}
         </div>
     );
 }
