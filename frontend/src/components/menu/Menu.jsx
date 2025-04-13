@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect } from "react";
 import constants from '../../constants';
 import './menu.css';
+import AnalogClock from '../clock/AnalogClock';
 
 function Menu() {
     const [menu, setMenu] = useState([]);
@@ -228,6 +229,7 @@ function Menu() {
         <div className="menu-container" style={menuStyle}>
             <div className="open-close-btn" onClick={openClose}></div>
             {config.open ? menuJSX : <div className="bar-closed">Bar Closed</div>}
+            <AnalogClock />
         </div>
     );
 }
